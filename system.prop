@@ -3,7 +3,7 @@ ro.qualcomm.cabl=0
 
 # RAM
 ro.config.low_ram=false
-ro.config.zram=false
+ro.config.zram=true
 
 # RADIO (default network type is set by init_cprimeltemtr.cpp)
 persist.radio.snapshot_enabled=1

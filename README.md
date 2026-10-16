@@ -25,7 +25,28 @@ the SR544 / SR200PC20 cameras, GSM/WCDMA/LTE radio and no NFC.
 | Boot, display, touch, setup wizard | Working |
 | Wi-Fi | Working (connects, gets an address) |
 | Modem / RIL | Starts, baseband reported, searching for networks; calls/SMS/data not yet tested with a SIM |
-| Camera, audio, sensors, GPS, Bluetooth | Not yet tested |
+| Camera | Preview and 2576 x 1932 JPEG capture work; preview banding/color and capture exposure/focus still need work |
+| Memory | 512 MiB zRAM verified active after reboot |
+| Google apps / authentication | ARM Android 7.1 Open GApps pico installed without wiping data; user confirmed TikTok Lite and ChatGPT login |
+| Audio, sensors, GPS, Bluetooth | Not yet tested |
+
+### Bring-up validation
+
+The Rossa camera kernel ABI was adjusted to match the legacy vendor blobs.
+Boot image builds and 32-bit ISP/actuator layout comparisons passed. The camera
+now opens and saves JPEGs, and a lens-position I2C write succeeded during testing.
+Earlier autofocus timeouts and the remaining image-quality issues mean camera
+support is still partial.
+
+zRAM is enabled in this device's system properties. The common fstab specifies
+536870912 bytes, matching the existing post-boot script; the previous 25% pool
+filled during Google apps startup. After a full reboot, `/proc/swaps` reported
+524284 KiB on `/dev/block/zram0`. The Rossa kernel configuration also disables
+the input event debugger, which otherwise opens input devices and floods logs
+with accelerometer events.
+
+Google apps and Brave were installed separately on the test phone; their APKs
+are not bundled in the ROM source. Successful login was confirmed by the user.
 
 ## Repositories
 
