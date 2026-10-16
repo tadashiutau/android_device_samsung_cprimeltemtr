@@ -11,6 +11,9 @@ TARGET_LIBINIT_MSM8916_DEFINES_FILE := $(LOCAL_PATH)/init/init_cprimeltemtr.cpp
 
 # Kernel
 TARGET_KERNEL_VARIANT_CONFIG := msm8916_sec_rossa_tmo_defconfig
+# msm8916-common's mkbootimg.mk drops BOARD_KERNEL_TAGS_OFFSET; without it the
+# DT lands at 0x80000100 and overlaps the kernel. Match stock (0x81e00000).
+BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 
 # Partition sizes (read from the SM-G360T1 eMMC: boot p16, recovery p17, system p25, cache p26, userdata p27)
 BOARD_BOOTIMAGE_PARTITION_SIZE      := 13631488
