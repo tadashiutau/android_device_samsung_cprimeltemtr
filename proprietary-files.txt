@@ -16,6 +16,12 @@ etc/A05QF_sr544_module_info.xml
 etc/B05QF_sr544_module_info.xml
 etc/C05QF_sr544_module_info.xml
 lib/hw/camera.msm8916.so:lib/hw/camera.vendor.msm8916.so
+lib/libaec_algo_front.so
+lib/libaec_algo_rear.so
+lib/libaf_algo_rear.so
+lib/libAl_Awb.so
+lib/libAl_Awb_Sp.so
+lib/libawb_algo_rear_al.so
 lib/libmmcamera2_stats_algorithm.so
 lib/libmmcamera_cac2_lib.so
 lib/libmmcamera_wavelet_lib.so
@@ -50,10 +56,15 @@ vendor/lib/libmmcamera_tintless_algo.so
 vendor/lib/libmmcamera_tintless_bg_pca_algo.so
 vendor/lib/libmmipl.so
 vendor/lib/libmmjpeg.so
+vendor/lib/libmmqjpeg_codec.so
 vendor/lib/liboemcamera.so
 vendor/lib/libqomx_jpegenc.so
 
 # Qualcomm framework
+vendor/lib/libdiag.so
+vendor/lib/libdsutils.so
+vendor/lib/libidl.so
+vendor/lib/libqcci_legacy.so
 vendor/lib/libqmi_cci.so
 vendor/lib/libqmi_client_qmux.so
 vendor/lib/libqmi_common_so.so
@@ -64,3 +75,18 @@ vendor/lib/libqmi.so
 
 # RIL
 lib/libsec-ril.so
+
+# Data - use the G360T1's own stack: msm8916-common's newer netmgrd/qmuxd need
+# ds_system_call3 from a newer libdsutils than this 5.1.1 firmware ships
+bin/netmgrd
+bin/qmuxd
+bin/rmnetcli
+etc/data/netmgr_config.xml
+lib/librmnetctl.so
+vendor/lib/libcneapiclient.so
+vendor/lib/libconfigdb.so
+vendor/lib/libnetmgr.so
+
+# Camera / media libraries the blobs above link against
+lib/libawb_algo_front.so
+vendor/lib/libmmosal.so

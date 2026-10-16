@@ -8,3 +8,8 @@ $(call inherit-product, device/samsung/coreprimelte-common/device-common.mk)
 LOCAL_PATH := device/samsung/cprimeltemtr
 
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
+
+# RIL: init.qcom.rc shims libril.so with libril_shim.so, but nothing in the
+# common trees adds it to the build, so rild failed to link.
+PRODUCT_PACKAGES += \
+    libril_shim
