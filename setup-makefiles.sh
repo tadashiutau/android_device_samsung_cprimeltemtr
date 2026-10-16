@@ -19,7 +19,7 @@
 set -e
 
 # Required!
-export DEVICE=coreprimeltespr
+export DEVICE=cprimeltemtr
 export DEVICE_COMMON=coreprimelte-common
 export VENDOR=samsung
 

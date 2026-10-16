@@ -1,16 +1,10 @@
-#Inherit from vendor
-$(call inherit-product-if-exists, vendor/samsung/coreprimeltespr/coreprimeltespr-vendor.mk)
+# The SM-G360T1 has no NFC controller and no CDMA radio
+CPRIME_HAS_NFC := false
+CPRIME_HAS_CDMA := false
 
-# Inherit from common
+$(call inherit-product-if-exists, vendor/samsung/cprimeltemtr/cprimeltemtr-vendor.mk)
 $(call inherit-product, device/samsung/coreprimelte-common/device-common.mk)
 
-LOCAL_PATH := device/samsung/coreprimeltespr
+LOCAL_PATH := device/samsung/cprimeltemtr
 
-# Common overlay
-DEVICE_PACKAGE_OVERLAYS += device/samsung/coreprimeltespr/overlay
-
-# NFC configs
-PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/configs/nfc/nfcee_access.xml:system/etc/nfcee_access.xml \
-	$(LOCAL_PATH)/configs/nfc/libnfc-sec-hal.conf:system/etc/libnfc-sec-hal.conf \
-	$(LOCAL_PATH)/configs/nfc/libnfc-sec.conf:system/etc/libnfc-brcm.conf
+DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay

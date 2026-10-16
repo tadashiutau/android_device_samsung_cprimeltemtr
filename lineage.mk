@@ -1,14 +1,13 @@
-
 # Inherit from common
 $(call inherit-product, device/samsung/coreprimelte-common/lineage.mk)
 
-$(call inherit-product, device/samsung/coreprimeltespr/device.mk)
+$(call inherit-product, device/samsung/cprimeltemtr/device.mk)
 
 ## Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := coreprimeltespr
-PRODUCT_NAME := lineage_coreprimeltespr
+PRODUCT_DEVICE := cprimeltemtr
+PRODUCT_NAME := lineage_cprimeltemtr
 PRODUCT_BRAND := samsung
-PRODUCT_MODEL := SM-G360P
+PRODUCT_MODEL := SM-G360T1
 PRODUCT_MANUFACTURER := samsung
 PRODUCT_CHARACTERISTICS := phone
 

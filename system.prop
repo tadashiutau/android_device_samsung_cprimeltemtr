@@ -5,11 +5,10 @@ ro.qualcomm.cabl=0
 ro.config.low_ram=false
 ro.config.zram=false
 
-# RADIO
+# RADIO (default network type is set by init_cprimeltemtr.cpp)
 persist.radio.snapshot_enabled=1
 persist.radio.snapshot_timer=22
 persist.radio.sib16_support=1
-ro.config.combined_signal=true
 
 # EONS
 persist.eons.enabled=true
