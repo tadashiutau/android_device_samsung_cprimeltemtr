@@ -25,3 +25,6 @@ DEVICE_CACHEIMAGE_PARTITION_SIZE    := 314572800
 
 # Properties
 TARGET_SYSTEM_PROP += $(LOCAL_PATH)/system.prop
+
+# Camera: keep the HAL's preview format (forced yuv420p tints the preview)
+TARGET_CAMERA_KEEP_PREVIEW_FORMAT := true
