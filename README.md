@@ -15,12 +15,7 @@
 ---
 
 > [!NOTE]
-> **This port was made with AI.** Most of the porting, debugging and code in this
-> tree was done by AI assistants (Anthropic's Claude and OpenAI's ChatGPT), working
-> with the device owner, who ran every test on real hardware. Every change is
-> committed with a description of what it does and why. Read it, test it, and
-> judge it on its own merits. If you'd rather not run AI-written code on your
-> phone, that's completely fair.
+> This port was made by AI and tested.
 
 > [!WARNING]
 > Flashing custom firmware can brick your phone and wipes your data. Back up EFS
@@ -217,8 +212,6 @@ for both camera sensors.
 - [Galaxy-MSM8916](https://github.com/Galaxy-MSM8916) — the MSM8916 / Core Prime trees and kernel this port builds on
 - [TeamWin](https://twrp.me) — TWRP, used during bring-up
 - Samsung — kernel source, and the stock firmware the blobs come from
-- AI assistance: Anthropic's Claude and OpenAI's ChatGPT, with all testing done on the
-  device owner's phone
 
 <sub>Proprietary blobs are extracted from Samsung's stock firmware and belong to their
 respective owners.</sub>
