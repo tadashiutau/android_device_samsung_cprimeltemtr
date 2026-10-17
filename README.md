@@ -1,67 +1,90 @@
-# android_device_samsung_cprimeltemtr
+<div align="center">
 
-LineageOS 14.1 (Android 7.1.2) device tree for the Samsung Galaxy Core Prime
-**SM-G360T1** (MetroPCS). Bootloader / firmware base: `G360T1UVU2AQD1`.
+# 📱 Galaxy Core Prime · LineageOS 14.1
 
-Based on Galaxy-MSM8916's coreprimeltespr (SM-G360P) tree. Same "rossa" board;
-this variant uses the TMO board DT (`msm8916-sec-rossatmo-r00`), the SM5504 MUIC,
-the SR544 / SR200PC20 cameras, GSM/WCDMA/LTE radio and no NFC.
+**Device tree for the Samsung Galaxy Core Prime SM-G360T1 (MetroPCS) — codename `cprimeltemtr`**
+
+![Android](https://img.shields.io/badge/Android-7.1.2-3DDC84?logo=android&logoColor=white)
+![LineageOS](https://img.shields.io/badge/LineageOS-14.1-167C80?logo=lineageos&logoColor=white)
+![SoC](https://img.shields.io/badge/SoC-Snapdragon%20410-3253DC?logo=qualcomm&logoColor=white)
+![Status](https://img.shields.io/badge/status-bring--up-orange)
+![Built with AI](https://img.shields.io/badge/built%20with-AI-8A2BE2)
+
+</div>
+
+---
+
+> [!NOTE]
+> **This port was made with AI.** Most of the porting, debugging and code in this
+> tree was done by AI assistants (Anthropic's Claude and OpenAI's ChatGPT), working
+> with the device owner, who ran every test on real hardware. Every change is
+> committed with a description of what it does and why. Read it, test it, and
+> judge it on its own merits. If you'd rather not run AI-written code on your
+> phone, that's completely fair.
+
+> [!WARNING]
+> Flashing custom firmware can brick your phone and wipes your data. Back up EFS
+> (IMEI and carrier-unlock state) first. No warranty of any kind.
+
+## ✨ At a glance
 
 | | |
 |---:|:---|
-| SoC | Qualcomm MSM8916 (Snapdragon 410), 32-bit userspace (armeabi-v7a) |
-| GPU | Adreno 306 |
-| RAM | 1 GB |
-| Storage | 8 GB eMMC |
-| Display | 480 x 800, 4.5" (SC7798A panel) |
-| Cameras | 5 MP SR544 rear, 2 MP SR200PC20 front |
-| SIM | 1x micro-SIM (no eSIM) |
-| Shipped | Android 5.1.1 |
+| **Device** | Samsung Galaxy Core Prime SM-G360T1 (MetroPCS / T-Mobile "Rossa" board) |
+| **SoC** | Qualcomm MSM8916 (Snapdragon 410), 32-bit userspace (armeabi-v7a) |
+| **GPU** | Adreno 306 |
+| **RAM / storage** | 1 GB / 8 GB eMMC |
+| **Display** | 4.5" 480 × 800 (SC7798A panel) |
+| **Cameras** | 5 MP SR544 rear · 2 MP SR200PC20 front |
+| **SIM** | 1× micro-SIM (no eSIM) |
+| **Stock firmware** | Android 5.1.1, `G360T1UVU2AQD1` |
 
-## Status
+Based on Galaxy-MSM8916's `coreprimeltespr` (SM-G360P) tree. Same "Rossa" board, but
+this variant uses the TMO board DT (`msm8916-sec-rossatmo-r00`), the SM5504 MUIC, the
+SR544 / SR200PC20 cameras, a GSM/WCDMA/LTE radio, and no NFC.
+
+## 🚦 Status
 
 | Area | State |
 |---|---|
-| Boot, display, touch, setup wizard | Working |
-| Wi-Fi | Working (connects, gets an address) |
-| Modem / RIL | Starts, baseband reported, searching for networks; calls/SMS/data not yet tested with a SIM |
-| Camera | Preview and 2576 x 1932 JPEG capture work; preview banding/color and capture exposure/focus still need work |
-| Memory | 512 MiB zRAM verified active after reboot |
-| Google apps / authentication | ARM Android 7.1 Open GApps pico installed without wiping data; user confirmed TikTok Lite and ChatGPT login |
-| Audio, sensors, GPS, Bluetooth | Not yet tested |
+| Boot, display, touch, setup | ✅ Working |
+| Wi-Fi | ✅ Working |
+| Memory | ✅ 512 MiB zRAM, verified active after reboot |
+| Apps | ✅ Open GApps pico (ARM, 7.1); TikTok Lite and ChatGPT sign-in confirmed |
+| Modem / RIL | 🟡 Radio stack runs and reports baseband; calls, SMS and data untested (no SIM yet). VoLTE is unlikely without Samsung's IMS stack, which matters on T-Mobile now that 2G/3G are gone |
+| Camera | 🟡 Stills work (2576 × 1932 JPEG). Preview shows an orange tint and a vertical stripe; a fix is committed but **not yet tested**. Autofocus and exposure still need work |
+| Audio, sensors, GPS, Bluetooth | ⚪ Not tested yet |
 
-### Bring-up validation
+## 📦 Getting the source
 
-The Rossa camera kernel ABI was adjusted to match the legacy vendor blobs.
-Boot image builds and 32-bit ISP/actuator layout comparisons passed. The camera
-now opens and saves JPEGs, and a lens-position I2C write succeeded during testing.
-Earlier autofocus timeouts and the remaining image-quality issues mean camera
-support is still partial.
+Everything is pulled by one local manifest:
+[**tadashiutau/local_manifests**](https://github.com/tadashiutau/local_manifests) (branch `lineage-14.1`).
 
-zRAM is enabled in this device's system properties. The common fstab specifies
-536870912 bytes, matching the existing post-boot script; the previous 25% pool
-filled during Google apps startup. After a full reboot, `/proc/swaps` reported
-524284 KiB on `/dev/block/zram0`. The Rossa kernel configuration also disables
-the input event debugger, which otherwise opens input devices and floods logs
-with accelerometer events.
+| Path | Repository | Branch |
+|---|---|---|
+| `device/samsung/cprimeltemtr` | [this repo](https://github.com/tadashiutau/android_device_samsung_cprimeltemtr) | `lineage-14.1` |
+| `device/samsung/coreprimelte-common` | [tadashiutau/android_device_samsung_coreprimelte-common](https://github.com/tadashiutau/android_device_samsung_coreprimelte-common) | `cprimeltemtr-14.1` |
+| `device/samsung/msm8916-common` | [tadashiutau/android_device_samsung_msm8916-common](https://github.com/tadashiutau/android_device_samsung_msm8916-common) | `cprimeltemtr-14.1` |
+| `kernel/samsung/msm8916` | [tadashiutau/android_kernel_samsung_msm8916](https://github.com/tadashiutau/android_kernel_samsung_msm8916) | `cprimeltemtr-14.1` |
+| `vendor/samsung` | [tadashiutau/proprietary_vendor_samsung](https://github.com/tadashiutau/proprietary_vendor_samsung) | `cprimeltemtr-14.1` |
 
-Google apps and Brave were installed separately on the test phone; their APKs
-are not bundled in the ROM source. Successful login was confirmed by the user.
+```bash
+repo init -u https://github.com/LineageOS/android.git -b cm-14.1 --depth=1
+mkdir -p .repo/local_manifests
+curl -L -o .repo/local_manifests/cprimeltemtr.xml \
+  https://raw.githubusercontent.com/tadashiutau/local_manifests/lineage-14.1/cprimeltemtr.xml
+repo sync -c --no-tags --no-clone-bundle
+# The WebView prebuilts live in Git LFS:
+for a in arm arm64 x86 x86_64; do (cd external/chromium-webview/prebuilt/$a && git lfs pull); done
+```
 
-## Repositories
+## 🔨 Building
 
-Use the local manifest from
-[tadashiutau/local_manifests](https://github.com/tadashiutau/local_manifests) (branch `lineage-14.1`).
-It pulls this tree plus forks of `coreprimelte-common`, the MSM8916 kernel and
-`proprietary_vendor_samsung` with the changes this device needs.
+LineageOS 14.1 wants an Ubuntu 18.04-era host (OpenJDK 8, Python 2). A Docker container
+works well. Two things it needs:
 
-## Building
-
-LineageOS 14.1 needs an Ubuntu 18.04-era host (OpenJDK 8, Python 2). A Docker
-image works; two things the build needs inside the container:
-
-- `USER` must be set (Jack's launcher script reads `$USER`).
-- Jack fails TLS on newer OpenJDK 8 builds: remove `TLSv1, TLSv1.1` from
+- **`USER` must be set.** Jack's launcher script reads `$USER`, which Docker doesn't set.
+- **Jack fails TLS on newer OpenJDK 8.** Remove `TLSv1, TLSv1.1` from
   `jdk.tls.disabledAlgorithms` in `java.security`.
 
 ```bash
@@ -69,71 +92,133 @@ source build/envsetup.sh
 brunch lineage_cprimeltemtr-userdebug
 ```
 
-## Installing without a custom recovery
+## ⚡ Installing (no custom recovery needed)
 
-Samsung's Download mode accepts the raw images, so the ROM can be flashed with
-Heimdall (or Odin) directly, with no TWRP step:
+Samsung's Download mode accepts the raw images, so you can flash straight from
+[Heimdall](https://git.sr.ht/~grimler/Heimdall) (or Odin), with no TWRP step:
 
 ```bash
+# Phone in Download mode: Volume Down + Home + Power, then Volume Up
 heimdall flash --no-reboot \
     --BOOT boot.img --RECOVERY recovery.img \
     --SYSTEM system.img --USERDATA userdata.img --CACHE cache.img
 ```
 
-`USERDATA` wipes internal storage. Bootloaders, modem, EFS (IMEI and carrier
-unlock state), PERSIST and the partition table are not touched.
+Then pull the battery and power on. The first boot takes several minutes.
 
-## Known quirks
+- `USERDATA` **wipes internal storage** (the SD card is not touched).
+- Bootloaders, modem, EFS (IMEI and carrier-unlock state), PERSIST and the partition
+  table are left alone.
+- After a Heimdall flash, Samsung's bootloader boots recovery once before the first
+  normal boot. See below.
 
-### The bootloader sticks to recovery after any recovery boot
+## 🧩 Known quirks
 
-After this phone has booted into a recovery (TWRP or LineageOS recovery), the
-Samsung bootloader keeps choosing recovery on every following power-on. The kernel
-command line then shows `androidboot.boot_recovery=1`, even after a full power-off
-and a battery pull.
+<details>
+<summary><b>The bootloader keeps booting recovery after any recovery boot</b></summary>
 
-What was ruled out:
-- No `boot-recovery` bootloader message exists on any partition (the device has no
-  `misc` partition; `fota` is empty at offset 0).
-- The `param` sec_param restart reason is 0; the PMIC reports a plain power-key cold
-  boot; IMEM restart_reason is 0; no keys are held.
-- Recovery's own "Reboot system now" does not clear it.
+After the phone boots into any recovery (TWRP or LineageOS recovery), the Samsung
+bootloader keeps choosing recovery on every power-on. The kernel command line shows
+`androidboot.boot_recovery=1`, even after a full power-off **and** a battery pull.
 
-What clears it: **any Download-mode session that ends with Heimdall's reboot**,
-even a read-only one:
+**What clears it:** any Download-mode session that ends with Heimdall's reboot, even a
+read-only one:
 
 ```bash
-# phone in Download mode (Vol Down + Home + Power, then Vol Up)
+# Phone in Download mode
 heimdall print-pit
 ```
 
-The phone then boots Android normally (`androidboot.boot_recovery=0`). Reboots
-started from Android do not set the state; only recovery boots do. The state is
-probably held in the 16 bytes that change at the end of `param` (offset `0x9ffc00`),
-which look encrypted.
+The phone then boots Android normally (`androidboot.boot_recovery=0`). Reboots started
+from Android don't trigger this; only recovery boots do.
 
-After flashing with Heimdall, Samsung's bootloader also boots recovery once before
-the first normal boot.
+**What was ruled out:**
+- No `boot-recovery` bootloader message exists on any partition (there's no `misc`
+  partition, and `fota` is empty at offset 0).
+- The `param` restart reason is 0, the PMIC reports a plain power-key cold boot, the IMEM
+  restart reason is 0, and no keys are held.
+- Recovery's own "Reboot system now" doesn't clear it.
 
-### Boot image tags offset
+The state is probably held in the 16 bytes that change at the end of `param` (offset
+`0x9ffc00`), which look encrypted.
 
-`msm8916-common`'s custom `mkbootimg.mk` does not pass `BOARD_KERNEL_TAGS_OFFSET`, so
-images get mkbootimg's default tags address (`0x80000100`). The ~160 KiB DTB placed
-there would overlap the kernel at `0x80008000`. `BoardConfig.mk` passes
-`--tags_offset` explicitly so boot and recovery use `0x81e00000`, like stock.
+</details>
 
-### Blob and RIL fixes
+<details>
+<summary><b>Boot image tags offset</b></summary>
 
-- `libdiag`, `libdsutils`, `libidl`, `libqcci_legacy` and several camera libraries
-  must be in the blob list; without `libdiag`, `rild`, `qmuxd`, `time_daemon` and the
-  camera daemon fail to link and crash-loop, which also left the screen black after boot.
-- `init.qcom.rc` shims `libril.so` with `libril_shim.so`, but nothing in the common
-  trees builds it into the image; `device.mk` adds it.
-- The data stack (`netmgrd`, `qmuxd`, `libnetmgr`, `libconfigdb`, `librmnetctl`) comes
-  from this device's own 5.1.1 firmware: msm8916-common's newer `netmgrd` needs
+`msm8916-common`'s custom `mkbootimg.mk` never passes `BOARD_KERNEL_TAGS_OFFSET`, so
+images got mkbootimg's default tags address (`0x80000100`). The ~160 KiB device tree
+placed there would run into the kernel at `0x80008000`. `BoardConfig.mk` passes
+`--tags_offset` explicitly, so boot and recovery use `0x81e00000`, like stock.
+
+</details>
+
+<details>
+<summary><b>Blobs, RIL and the data stack</b></summary>
+
+- `libdiag`, `libdsutils`, `libidl`, `libqcci_legacy` and several camera libraries must
+  be in the blob list. Without `libdiag`, `rild`, `qmuxd`, `time_daemon` and the camera
+  daemon fail to link and crash-loop, which also left the screen black after boot.
+- `init.qcom.rc` shims `libril.so` with `libril_shim.so`, but nothing in the common trees
+  built it into the image. `device.mk` adds it.
+- The data stack (`netmgrd`, `qmuxd`, `libnetmgr`, `libconfigdb`, `librmnetctl`) comes from
+  this device's own 5.1.1 firmware. `msm8916-common`'s newer `netmgrd` needs
   `ds_system_call3` from a newer `libdsutils` than this firmware has.
 
-### Display tint
+</details>
 
-LineageOS's LiveDisplay defaults to Automatic, which tints the screen orange in the
-evening. Change it under Settings > Display > LiveDisplay.
+<details>
+<summary><b>Camera</b></summary>
+
+- **Kernel ABI:** the Rossa camera interfaces (ISP event numbers, CAMIF config, frame-skip
+  patterns, actuator config) are set back to the layout the Lollipop camera blobs were
+  built against. This was checked field by field against Samsung's own G360T1 kernel
+  headers. With it, the camera opens, saves JPEGs, and moves the lens. Autofocus
+  sometimes times out.
+- **Preview tint and stripe:** `msm8916-common`'s camera wrapper forces
+  `preview-format=yuv420p` for previews up to 720 × 720. This device's camera blob fills
+  those buffers with a layout gralloc's YV12 doesn't expect. `BoardConfig.mk` sets
+  `TARGET_CAMERA_KEEP_PREVIEW_FORMAT := true` so the HAL keeps its own preview format.
+  *Not yet verified on the phone.*
+
+</details>
+
+<details>
+<summary><b>Memory (zRAM)</b></summary>
+
+`ro.config.zram=true` turns on compressed swap. The common fstab now uses 512 MiB, the
+same as the post-boot script. The old 25% pool filled up while Google apps started.
+After a full reboot, `/proc/swaps` shows 524284 KiB on `/dev/block/zram0`. The Rossa
+kernel config also turns off the input event debugger, which otherwise floods the log
+with accelerometer events.
+
+</details>
+
+<details>
+<summary><b>Orange screen in the evening</b></summary>
+
+That's LineageOS's LiveDisplay night mode, which defaults to Automatic. Change it under
+**Settings → Display → LiveDisplay**.
+
+</details>
+
+## 🐧 Looking for mainline Linux instead?
+
+This board already has upstream support as `samsung,rossa`
+(`msm8916-samsung-rossa.dts`), so **postmarketOS** is the other road. It runs a modern
+kernel instead of Samsung's 3.10, though it's not Android. What's still missing upstream
+for this exact model: a proximity sensor node, the RT5033 flash LED driver, and drivers
+for both camera sensors.
+
+## 🙏 Credits
+
+- [LineageOS](https://lineageos.org) — the OS itself
+- [Galaxy-MSM8916](https://github.com/Galaxy-MSM8916) — the MSM8916 / Core Prime trees and kernel this port builds on
+- [TeamWin](https://twrp.me) — TWRP, used during bring-up
+- Samsung — kernel source, and the stock firmware the blobs come from
+- AI assistance: Anthropic's Claude and OpenAI's ChatGPT, with all testing done on the
+  device owner's phone
+
+<sub>Proprietary blobs are extracted from Samsung's stock firmware and belong to their
+respective owners.</sub>
