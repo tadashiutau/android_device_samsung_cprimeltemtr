@@ -57,7 +57,7 @@ Everything is pulled by one local manifest:
 
 | Path | Repository | Branch |
 |---|---|---|
-| `device/samsung/cprimeltemtr` | [this repo](https://github.com/tadashiutau/android_device_samsung_cprimeltemtr) | `lineage-14.1` |
+| `device/samsung/cprimeltemtr` | [this repo](https://github.com/tadashiutau/lineageos-galaxy-core-prime-sm-g360t1) | `lineage-14.1` |
 | `device/samsung/coreprimelte-common` | [tadashiutau/android_device_samsung_coreprimelte-common](https://github.com/tadashiutau/android_device_samsung_coreprimelte-common) | `cprimeltemtr-14.1` |
 | `device/samsung/msm8916-common` | [tadashiutau/android_device_samsung_msm8916-common](https://github.com/tadashiutau/android_device_samsung_msm8916-common) | `cprimeltemtr-14.1` |
 | `kernel/samsung/msm8916` | [tadashiutau/android_kernel_samsung_msm8916](https://github.com/tadashiutau/android_kernel_samsung_msm8916) | `cprimeltemtr-14.1` |
