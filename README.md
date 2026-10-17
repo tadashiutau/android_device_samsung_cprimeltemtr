@@ -15,7 +15,7 @@
 ---
 
 > [!NOTE]
-> This port was made by AI and tested.
+> This port was made by AI.
 
 > [!WARNING]
 > Flashing custom firmware can brick your phone and wipes your data. Back up EFS
